@@ -15,22 +15,16 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Transaction Id</th>
-                                <th>Transferred From</th>
-                                <th>Transferred To</th>
                                 <th>Transferred Amount</th>
-                                <th>Date</th>
+                                <th>Type</th>
                             </tr>
                             </thead>
                             <tbody *ngFor="let transaction of transactions; index as i ">
                             <tr>
-                                <td>{{i+1}}</td>
                                 <td>{{transaction.id}}</td>
-                                <td>{{transaction.transferFrom}}</td>
-                                <td>{{transaction.transferTo}}</td>
                                 <td>{{transaction.amount}}</td>
-                                <td>{{formatDate(transaction.date)}}</td>
+                                <td>{{transaction.type}}</td>
                             </tr>
                             </tbody>
                         </table>

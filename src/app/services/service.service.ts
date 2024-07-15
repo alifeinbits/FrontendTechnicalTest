@@ -17,7 +17,7 @@ export class ServiceService {
     private _refreshNeeded$ = new Subject<void>();
     private accountUrl: string = environment.apiUrl + '/balance';
     private transferUrl: string = environment.apiUrl + '/transfer';
-    private trasactionUrl: string = environment.apiUrl + '/transaction';
+    private trasactionUrl: string = environment.apiUrl + '/mini-statement';
 
     constructor(
         private http: HttpClient,
@@ -43,9 +43,11 @@ export class ServiceService {
     }
 
     onFetchProfile() {
-        let header = new HttpHeaders();
-        header = header.append('token', sessionStorage.getItem('auth-token'));
-        return this.http.get(this.UserUrl, {headers: header}).pipe(catchError(error => this.handleError(error)));
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+        const params = new HttpParams().set('customerId', sessionStorage.getItem('username'));
+        const options = { headers, params };
+        return this.http.get(this.UserUrl, options).pipe(catchError(error => this.handleError(error)));
     }
 
     onUpdateProfile(userDetails: { customerId: string; name: string; email: string }) {
@@ -77,8 +79,9 @@ export class ServiceService {
 
     getTransactions() {
         let headers = new HttpHeaders();
-        headers = headers.append('token', sessionStorage.getItem('auth-token'));
-        const options = {headers};
+        headers = headers.append('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+        const params = new HttpParams().set('customerId', sessionStorage.getItem('username'));
+        const options = { headers, params };
         return this.http.get(this.trasactionUrl, options).pipe(catchError(error => this.handleError(error)));
     }
 }
