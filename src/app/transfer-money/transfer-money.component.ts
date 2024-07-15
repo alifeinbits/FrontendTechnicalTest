@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ServiceService} from '../services/service.service';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-transfer-money',
@@ -11,9 +12,11 @@ import {ToastrService} from 'ngx-toastr';
 export class TransferMoneyComponent implements OnInit {
     transferMoneyForm: FormGroup;
 
+
     constructor(
         private service: ServiceService,
         private toastr: ToastrService,
+        public router: Router
     ) {
     }
 
@@ -28,12 +31,13 @@ export class TransferMoneyComponent implements OnInit {
 
     transferMoneyFormSubmit() {
         const transferDetails = {
-            transferTo: this.transferMoneyForm.value.transferTo,
+            accountId: this.transferMoneyForm.value.transferTo,
             amount: this.transferMoneyForm.value.amount
         };
         this.service.transferMoney(transferDetails).subscribe(
             response => {
                 this.toastr.success(response['message']);
+                this.router.navigate(['/login']);
             }
         )
     }

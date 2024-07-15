@@ -70,10 +70,11 @@ export class ServiceService {
         const options = { headers, params };
         return this.http.get(this.accountUrl, options).pipe(catchError(error => this.handleError(error)));
     }
-    transferMoney(transferDetails) {
+    transferMoney(transferDetails: { accountId: any; amount: any; }) {
         let headers = new HttpHeaders();
-        headers = headers.append('token', sessionStorage.getItem('auth-token'));
-        const options = {headers};
+        headers = headers.append('Authorization', `Bearer ${sessionStorage.getItem('auth-token')}`);
+        const params = new HttpParams().set('targetAccountId', sessionStorage.getItem('username'));
+        const options = { headers, params };
         return this.http.post(this.transferUrl, transferDetails, options).pipe(catchError(error => this.handleError(error)));
     }
 
