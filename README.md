@@ -29,6 +29,5 @@
 ```
 
 ### Description
-
-This project is demo project for angular beginners to implement the angular with external apis and routes. 
+Full Stack Developer Role Technical Test at Compulynx
 
